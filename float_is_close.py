@@ -13,6 +13,9 @@ This script is minimalistic with no dependencies beyond the standard library.
 
 IMPORTANT: The 53-bit significand precision gives 15 to 17 significant decimal
            digits of precision (2e-53 ≈ 1.11 x 10e-16).
+
+See PEP-0485 for implementation details.
+- https://peps.python.org/pep-0485/
 """
 
 from dataclasses import dataclass
