@@ -11,7 +11,9 @@
 from math import isinf, isnan
 
 
-def float_is_close(a: float, b: float, significand: int, relative_tolerance: float = 1e-9) -> bool:
+def float_is_close(
+    a: float, b: float, significand: int, relative_tolerance: float = 1e-9
+) -> bool:
     # Numbers are equal
     if a == b:
         return True
@@ -21,7 +23,9 @@ def float_is_close(a: float, b: float, significand: int, relative_tolerance: flo
         return False
 
     absolute_tolerance = 10**-significand
-    tolerance = max(relative_tolerance * max(abs(a), abs(b)), absolute_tolerance)
+    tolerance = max(
+        relative_tolerance * max(abs(a), abs(b)), absolute_tolerance
+    )
     diff = abs(a - b)
 
     return diff <= tolerance
