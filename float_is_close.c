@@ -12,6 +12,7 @@
 
 #include "float_is_close.h"
 
+#include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
 
