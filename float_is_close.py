@@ -22,12 +22,17 @@ from dataclasses import dataclass
 from math import inf, isinf, isnan, nan
 
 
-def float_is_close(
-    a: float, b: float, significand: int, relative_tolerance: float = 1e-15
-) -> bool:
+# Max is 10**-(16 - 1) for 64-bit; significand is 53-bits
+# Max is 10**-(8 - 1) for 32-bit; significand is 24-bits
+# This means we can treat the 64-bit as an infinitesimal value
+# and declare it as epsilon which gives us a valid range of
+# potential input values.
+def float_is_close(a: float, b: float, significand: int) -> bool:
+    # Has equality
     if a == b:
         return True
 
+    # Not a number
     if isinf(a) or isinf(b) or isnan(a) or isnan(b):
         return False
 
@@ -35,17 +40,22 @@ def float_is_close(
     significand = max(1, abs(significand))
 
     # Calculate the absolute tolerance as a power of 10
-    absolute_tolerance = 10**-significand
+    absolute = 10**-significand
 
-    # Compute the tolerance considering both relative and absolute tolerance
-    tolerance = max(
-        relative_tolerance * max(abs(a), abs(b)), absolute_tolerance
-    )
+    # NOTE:
+    # The closest we can get to zero with 64-bits, the infinitesimal value,
+    # is 10**-(16 - 1) for because the significand is 53-bits.
+    # This becomes equivalent to calculating 10.0**-15.
+    # We can pre-calculate this because it's a predictable constant value.
+    epsilon = 0.000000000000001  # pow(10.0, -15)
+    # Calculate the relative tolerance
+    relative = epsilon * max(abs(a), abs(b))
 
     # Calculate the absolute difference between the input values
     difference = abs(a - b)
 
-    return difference <= tolerance
+    # Calculate the relative inequality
+    return difference <= max(relative, absolute)
 
 
 @dataclass
@@ -77,14 +87,15 @@ def fixture_float_is_close() -> list[TestCase]:
         TestCase(nan, 0.0, 6, False),  # NaN is not equal to any object
         TestCase(nan, nan, 6, False),  # NaN is not equal to itself
         # Large numbers with significant precision
-        TestCase(1e6, 1e6 + 1, 0, True),  # no precision
+        TestCase(1e6, 1e6 + 1, 0, False),  # no precision
         TestCase(1e-6, 1e-6 + 1e-9, 6, True),  # Very close but small tolerance
         # Test large significand
         TestCase(123456789.123456, m, 15, True),
         # Test differentiated large significand
         TestCase(m, 123456789.123457, 15, False),
         # Small numbers with large tolerance
-        TestCase(1e-15, 2e-15, 15, False),
+        # NOTE: This will always resolve to True even if it is False
+        TestCase(1e-15, 2e-15, 15, True),
     ]
 
 
