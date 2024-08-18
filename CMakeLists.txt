@@ -53,4 +53,7 @@ add_custom_target(
 )
 
 enable_testing()
-add_test(NAME float_is_close COMMAND ${EXECUTABLE_OUTPUT_PATH}/test_float_is_close)
+add_test(
+    NAME float_is_close
+    COMMAND ${EXECUTABLE_OUTPUT_PATH}/test_float_is_close
+)
