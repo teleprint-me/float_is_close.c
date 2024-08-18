@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 
-# NOTE: Requires python 3.7 or greater
+"""
+Copyright © 2024 Austin Berrio
 
-# NOTE: This is a minimalistic dependency.
-#
-# If tests, or further extentions are to be implemented,
-# then there should be no other dependency than the builtin standard library.
+float_is_close.py
+
+A simple proof of concept for float_is_close.c in pure python
+
+NOTE: Requires python 3.7 or greater
+
+NOTE: This is a minimalistic dependency.
+
+NOTE: If tests, or further extentions are to be implemented,
+      then there should be no other dependency than the builtin
+      standard library.
+"""
 
 # Proof of concept
 from math import isinf, isnan
@@ -31,6 +40,7 @@ def float_is_close(
     return diff <= tolerance
 
 
-# 1e-15 is not equal to 2e-15
-result = float_is_close(1e-15, 2e-15, 15)
-print(result is False)  # NOTE: This resolves to False
+if __name__ == "__main__":
+    # 1e-15 is not equal to 2e-15
+    result = float_is_close(1e-15, 2e-15, 15)
+    print(result is False)  # NOTE: This resolves to False
