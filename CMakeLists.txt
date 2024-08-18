@@ -33,7 +33,7 @@ set_target_properties(
 target_include_directories(float_is_close PUBLIC include)
 
 # Add test executable
-add_executable(test_float_is_close test_is_float_close.c)
+add_executable(test_float_is_close test_float_is_close.c)
 target_link_libraries(test_float_is_close float_is_close m)
 
 # Install rules for the library
