@@ -13,8 +13,6 @@
 #include "float_is_close.h"
 
 #include <math.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 // Determine a floating-point equality within a specified tolerance
 bool double_is_close(double a, double b, int64_t significand) {
