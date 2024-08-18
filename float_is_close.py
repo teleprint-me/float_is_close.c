@@ -55,13 +55,13 @@ class TestCase:
 
 def fixture_float_is_close() -> list[TestCase]:
     # Arbitrary values used for testing
-    n: float = 0.053803  # exclude the number while including the fraction
-    m: float = 123456789.123456  # include number and fraction
-    o: float = 0.053721  # less than n
-    p: float = 0.053951  # greater than n
+    n: float = 0.053803  # example value with a fraction
+    m: float = 123456789.123456  # example large value
+    o: float = 0.053721  # slightly less than n
+    p: float = 0.053951  # slightly more than n
 
     return [
-        # precision is within a range of 6 digits
+        # Precision within a range of 6 digits
         TestCase(0.053803, n, 6, True),  # equal to
         TestCase(n, o, 6, False),  # less than
         TestCase(n, p, 6, False),  # greater than
@@ -87,10 +87,26 @@ def fixture_float_is_close() -> list[TestCase]:
 
 def test_float_is_close() -> bool:
     """
-    Returns True if tests pass, False if any test fails completion
+    Returns True if all tests pass, False if any test fails.
     """
-    pass
+    test_cases = fixture_float_is_close()
+
+    all_tests_pass = True
+    for i, case in enumerate(test_cases, 1):
+        result = float_is_close(case.a, case.b, case.significand)
+        if result != case.expected:
+            print(
+                f"Test {i} failed: "
+                f"float_is_close({case.a}, {case.b}, {case.significand}) "
+                f"returned {result}, expected {case.expected}."
+            )
+            all_tests_pass = False
+
+    return all_tests_pass
 
 
 if __name__ == "__main__":
-    test_float_is_close()
+    if test_float_is_close():
+        print("All tests passed.")
+    else:
+        print("Some tests failed.")
