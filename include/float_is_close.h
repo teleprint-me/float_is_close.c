@@ -20,8 +20,8 @@
  * @note For 64-bit doubles with a 53-bit significand, this is approximately
  *       10**-15.
  */
-#ifndef DOUBLE_EPSILON
-    #define DOUBLE_EPSILON 1e-15
+#ifndef FIC_DOUBLE_EPSILON
+    #define FIC_DOUBLE_EPSILON 1e-15
 #endif
 
 /**
@@ -31,8 +31,8 @@
  * @note For 32-bit floats with a 24-bit significand, this is approximately
  *       10**-7.
  */
-#ifndef SINGLE_EPSILON
-    #define SINGLE_EPSILON 1e-7
+#ifndef FIC_SINGLE_EPSILON
+    #define FIC_SINGLE_EPSILON 1e-7
 #endif
 
 /**

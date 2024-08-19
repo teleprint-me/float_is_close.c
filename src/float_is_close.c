@@ -74,6 +74,7 @@ static const double const tolerance_table[16]
  *                    tolerance, false otherwise.
  *
  * @note The significand is clamped if it is out of range.
+ * @note FIC_EPSILON_DOUBLE_TOLERANCE affects relative tolerance.
  */
 bool double_is_close(double a, double b, size_t significand) {
     if (a == b) {
@@ -88,7 +89,7 @@ bool double_is_close(double a, double b, size_t significand) {
     significand = FIC_CLAMP(significand, 1, 15);
 
     double absolute_tolerance = tolerance_table[significand];
-    double relative_tolerance = DOUBLE_EPSILON * fmax(fabs(a), fabs(b));
+    double relative_tolerance = FIC_DOUBLE_EPSILON * fmax(fabs(a), fabs(b));
     double difference         = fabs(a - b);
 
     return difference <= fmax(relative_tolerance, absolute_tolerance);
@@ -108,6 +109,7 @@ bool double_is_close(double a, double b, size_t significand) {
  *                    tolerance, false otherwise.
  *
  * @note The significand is clamped if it is out of range.
+ * @note FIC_EPSILON_SINGLE_TOLERANCE affects relative tolerance.
  */
 bool float_is_close(float a, float b, size_t significand) {
     // Numbers are equal
@@ -125,7 +127,7 @@ bool float_is_close(float a, float b, size_t significand) {
 
     float absolute_tolerance = (float) tolerance_table[significand];
     float relative_tolerance
-        = ((float) SINGLE_EPSILON) * fmaxf(fabsf(a), fabsf(b));
+        = ((float) FIC_SINGLE_EPSILON) * fmaxf(fabsf(a), fabsf(b));
     float difference = fabsf(a - b);
 
     return difference <= fmaxf(relative_tolerance, absolute_tolerance);
