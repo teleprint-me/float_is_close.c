@@ -10,6 +10,7 @@
 #define FLOAT_IS_CLOSE_H
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 /**
