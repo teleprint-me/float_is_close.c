@@ -4,6 +4,9 @@
  * @file test_is_float_close.c
  *
  * @brief A simple test suite for float_is_close.c in pure C
+ *
+ * @note The 53-bit significand precision gives from 15 to 17 significant
+ *       decimal digits precision (2−53 ≈ 1.11 × 10−16).
  */
 
 #include "float_is_close.h"
@@ -51,7 +54,7 @@ const test_case_t const tests[] = {
 
 const size_t number_of_tests = sizeof(tests) / sizeof(tests[0]);
 
-bool test_double_is_close(void) {
+int test_double_is_close(void) {
     printf("Running double_is_close tests...\n");
 
     // Iterate over test cases
@@ -88,13 +91,13 @@ bool test_double_is_close(void) {
                 tests[i].a,
                 tests[i].significand
             );
-            return true; // tests failed: 1 on failure
+            return 1; // tests failed: 1 on failure
         }
     }
 
-    return false; // tests passed: 0 on success
+    return 0; // tests passed: 0 on success
 }
 
 int main(void) {
-    return (int) test_double_is_close();
+    return test_double_is_close();
 }
