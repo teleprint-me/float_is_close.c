@@ -19,7 +19,7 @@
  * @note For 64-bit doubles with a 53-bit significand, this is approximately
  *       10**-15.
  */
-#define DOUBLE_EPSILON 1e-15
+#define DOUBLE_EPSILON               1e-15
 
 /**
  * @brief The smallest difference between two distinct single-precision
@@ -28,7 +28,29 @@
  * @note For 32-bit floats with a 24-bit significand, this is approximately
  *       10**-7.
  */
-#define SINGLE_EPSILON 1e-7
+#define SINGLE_EPSILON               1e-7
+
+/**
+ * @brief Get the minimum of two values.
+ *
+ * @note This macro compares two arguments and returns the smaller one.
+ */
+#define min(a, b)                    (((a) < (b)) ? (a) : (b))
+
+/**
+ * @brief Get the maximum of two values.
+ *
+ * @note This macro compares two arguments and returns the larger one.
+ */
+#define max(a, b)                    (((a) > (b)) ? (a) : (b))
+
+/**
+ * @brief Clamp a value to a specified range.
+ *
+ * @note This macro ensures that a value stays within a given range by
+ *       clamping it to the specified minimum and maximum values.
+ */
+#define clamp(val, min_val, max_val) (min(max((val), (min_val)), (max_val)))
 
 /**
  * @brief Determine if two double-precision floating-point numbers are close
@@ -42,6 +64,8 @@
  *
  * @return            True if the numbers are close within the specified
  *                    tolerance, false otherwise.
+ *
+ * @note The significand is clamped if it is out of range.
  */
 bool double_is_close(double a, double b, size_t significand);
 
