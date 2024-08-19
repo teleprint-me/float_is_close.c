@@ -6,6 +6,9 @@
  * @brief Compare floating-point numbers with a given tolerance in pure C
  *
  * @note FIC is an abbreviation of FLOAT_IS_CLOSE
+ *
+ * @note see 1.2: Epsilon-Delta Definition of a Limit for details
+ * https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex)
  */
 
 #ifndef FLOAT_IS_CLOSE_H
