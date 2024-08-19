@@ -13,32 +13,77 @@
 #include "float_is_close.h"
 
 #include <math.h>
+#include <stdlib.h>
 
-// Determine a floating-point equality within a specified tolerance
-bool double_is_close(double a, double b, int64_t significand) {
-    // Numbers are equal
+// Pre-computed lookup table
+static const double const tolerance_table[16]
+    = {1.0,
+       0.1,
+       0.01,
+       0.001,
+       0.0001,
+       0.00001,
+       0.000001,
+       0.0000001,
+       0.00000001,
+       0.000000001,
+       0.0000000001,
+       0.00000000001,
+       0.000000000001,
+       0.0000000000001,
+       0.00000000000001,
+       0.000000000000001};
+
+/**
+ * @brief Determine if two double-precision floating-point numbers are close
+ *        within a specified tolerance.
+ *
+ * @param a           The first floating-point number.
+ * @param b           The second floating-point number.
+ * @param significand The number of significant digits to consider (must be
+ *                    in the range 1 to 15 inclusive). This determines the
+ *                    absolute tolerance.
+ *
+ * @return            True if the numbers are close within the specified
+ *                    tolerance, false otherwise.
+ *
+ * @note The significand is clamped if it is out of range.
+ */
+bool double_is_close(double a, double b, size_t significand) {
     if (a == b) {
         return true;
     }
 
-    // Arguments are not numbers
     if (isinf(a) || isinf(b) || isnan(a) || isnan(b)) {
         return false;
     }
 
-    // Calculate the minimum tolerance based on the significand
-    significand          = (0.0 > significand) ? significand : -significand;
-    double min_tolerance = pow(10.0, significand);
-    // Calculate the maximum tolerance based on the scale of the numbers
-    double max_tolerance = min_tolerance * fmax(fabs(a), fabs(b));
+    // Clamp the significand to the range 1 <= significand <= 15
+    significand = clamp(significand, 1, 15);
 
-    // Compare the absolute difference between the numbers within the tolerance
-    // range
-    return fabs(a - b) <= fmax(max_tolerance, min_tolerance);
+    double absolute_tolerance = tolerance_table[significand];
+    double relative_tolerance = DOUBLE_EPSILON * fmax(fabs(a), fabs(b));
+    double difference         = fabs(a - b);
+
+    return difference <= fmax(relative_tolerance, absolute_tolerance);
 }
 
-// Determine a floating-point equality within a specified tolerance
-bool float_is_close(float a, float b, int32_t significand) {
+/**
+ * @brief Determine if two single-precision floating-point numbers are close
+ *        within a specified tolerance.
+ *
+ * @param a           The first floating-point number.
+ * @param b           The second floating-point number.
+ * @param significand The number of significant digits to consider (must be
+ *                    in the range 1 to 7 inclusive). This determines the
+ *                    absolute tolerance.
+ *
+ * @return            True if the numbers are close within the specified
+ *                    tolerance, false otherwise.
+ *
+ * @note The significand is clamped if it is out of range.
+ */
+bool float_is_close(float a, float b, size_t significand) {
     // Numbers are equal
     if (a == b) {
         return true;
@@ -49,13 +94,13 @@ bool float_is_close(float a, float b, int32_t significand) {
         return false;
     }
 
-    // Calculate the minimum tolerance based on the significand
-    significand         = (0.0f > significand) ? significand : -significand;
-    float min_tolerance = powf(10.0f, significand);
-    // Calculate the maximum tolerance based on the scale of the numbers
-    float max_tolerance = min_tolerance * fmaxf(fabsf(a), fabsf(b));
+    // Clamp the significand to the range 1 <= significand <= 7
+    significand = clamp(significand, 1, 7);
 
-    // Compare the absolute difference between the numbers within the tolerance
-    // range
-    return fabsf(a - b) <= fmaxf(max_tolerance, min_tolerance);
+    float absolute_tolerance = (float) tolerance_table[significand];
+    float relative_tolerance
+        = ((float) SINGLE_EPSILON) * fmaxf(fabsf(a), fabsf(b));
+    float difference = fabsf(a - b);
+
+    return difference <= fmaxf(relative_tolerance, absolute_tolerance);
 }
