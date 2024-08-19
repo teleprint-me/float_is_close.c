@@ -24,38 +24,38 @@ from math import inf, isinf, isnan, nan
 
 # Max is 10**-(16 - 1) for 64-bit; significand is 53-bits
 # Max is 10**-(8 - 1) for 32-bit; significand is 24-bits
-# This means we can treat the 64-bit as an infinitesimal value
-# and declare it as epsilon which gives us a valid range of
-# potential input values.
+# float_is_close function checks if two floating point numbers
+# are close within a specified precision.
 def float_is_close(a: float, b: float, significand: int) -> bool:
-    # Has equality
+
+    # Check for equality
     if a == b:
         return True
 
-    # Not a number
-    if isinf(a) or isinf(b) or isnan(a) or isnan(b):
+    # Handle cases where either number is NaN or infinity
+    if (isnan(a) or isnan(b)) or (isinf(a) or isinf(b)):
         return False
 
     # Ensure significand is positive and non-zero
     significand = max(1, abs(significand))
 
-    # Calculate the absolute tolerance as a power of 10
-    absolute = 10**-significand
+    # Calculate absolute tolerance based on the number of
+    # decimal digits in significand.
+    absolute_tolerance = 10.0 ** (-significand)
 
-    # NOTE:
-    # The closest we can get to zero with 64-bits, the infinitesimal value,
-    # is 10**-(16 - 1) for because the significand is 53-bits.
-    # This becomes equivalent to calculating 10.0**-15.
-    # We can pre-calculate this because it's a predictable constant value.
-    epsilon = 0.000000000000001  # pow(10.0, -15)
-    # Calculate the relative tolerance
-    relative = epsilon * max(abs(a), abs(b))
+    # Predefined infinitesimal value for 64-bit floats (53 bits significand),
+    # equivalent to 1e-15.
+    epsilon = 1e-15
 
-    # Calculate the absolute difference between the input values
+    # Calculate relative tolerance based on the larger absolute value
+    # between a and b.
+    relative_tolerance = epsilon * max(abs(a), abs(b))
+
+    # Compute the difference between input values
     difference = abs(a - b)
 
-    # Calculate the relative inequality
-    return difference <= max(relative, absolute)
+    # Check if difference is within the specified tolerance (absolute or relative)
+    return difference <= max(relative_tolerance, absolute_tolerance)
 
 
 @dataclass
