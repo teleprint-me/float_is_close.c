@@ -1,8 +1,8 @@
-# float-is-close.c
+# float_is_close.c
 **Compare floating-point numbers with a given tolerance in C**
 
 ## Overview
-`float-is-close.c` is a C library designed to accurately compare floating-point numbers with a configurable tolerance. It provides functions to compare both single-precision and double-precision floating-point numbers. This library is intended to be lightweight, efficient, and easy to integrate into existing C projects.
+`float_is_close.c` is a C library designed to accurately compare floating-point numbers with a configurable tolerance. It provides functions to compare both single-precision and double-precision floating-point numbers. This library is intended to be lightweight, efficient, and easy to integrate into existing C projects.
 
 ## Directory Structure
 ```plaintext
