@@ -87,5 +87,18 @@ bool float_is_close(float a, float b, size_t significand);
 - **`FIC_MAX(a, b)`**: Returns the maximum of two values.
 - **`FIC_CLAMP(value, lower, upper)`**: Clamps a value within a specified range.
 
+## References
+
+### Mathematical Background:
+- [Calculus](https://math.libretexts.org/Bookshelves/Calculus/Calculus_3e_(Apex))
+- [Discrete Mathematics](https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Discrete_Mathematics_(Levin))
+
+### Original Papers:
+- [APL comparison tolerance](https://dl.acm.org/doi/10.1145/800114.803685)
+- [PEP-0485](https://peps.python.org/pep-0485/)
+
+### Original Source Code:
+- [Christopher Barker's Proof of Concept](https://github.com/PythonCHB/close_pep/blob/master/is_close.py)
+
 ## License
 This project is licensed under the AGPL License - see the [LICENSE](LICENSE) file for details.
