@@ -20,20 +20,20 @@ option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 # Main library
 add_library(
     float_is_close
-    float_is_close.c
+    src/float_is_close.c
 )
 
 set_target_properties(
     float_is_close PROPERTIES 
     VERSION ${PROJECT_VERSION}
     RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}
-    PUBLIC_HEADER float_is_close.h
+    PUBLIC_HEADER include/float_is_close.h
 )
 
 target_include_directories(float_is_close PUBLIC include)
 
 # Add test executable
-add_executable(test_float_is_close test_float_is_close.c)
+add_executable(test_float_is_close tests/test_float_is_close.c)
 target_link_libraries(test_float_is_close float_is_close m)
 
 # Install rules for the library
