@@ -20,22 +20,26 @@
  *
  * @note This macro compares two arguments and returns the smaller one.
  */
-#define FIC_MIN(a, b)             ((a) < (b) ? (a) : (b))
+#define FIC_MIN(a, b)                  ((a) < (b) ? (a) : (b))
 
 /**
  * @brief Get the maximum of two values.
  *
  * @note This macro compares two arguments and returns the larger one.
  */
-#define FIC_MAX(a, b)             ((a) > (b) ? (a) : (b))
+#define FIC_MAX(a, b)                  ((a) > (b) ? (a) : (b))
 
 /**
  * @brief Clamp a value to a specified range.
  *
+ * @param value The input value to bind
+ * @param lower The lower boundary
+ * @param upper The upper boundary
+ *
  * @note This macro ensures that a value stays within a given range by
  *       clamping it to the specified minimum and maximum values.
  */
-#define FIC_CLAMP(val, low, high) (FIC_MAX(low, FIC_MIN(val, high)))
+#define FIC_CLAMP(value, lower, upper) (FIC_MAX(lower, FIC_MIN(value, upper)))
 
 // Pre-computed lookup table
 static const double const tolerance_table[16]
