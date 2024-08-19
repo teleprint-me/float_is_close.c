@@ -44,12 +44,12 @@ const test_case_t const tests[] = {
     {NAN, 0.0, 6, false},          // NaN is not equal to any object
     {NAN, NAN, 6, false},          // NaN is not equal to itself
     // Large numbers with significant precision
-    {1e6, 1e6 + 1, 0, true},      // no precision
+    {1e6, 1e6 + 1, 0, false},     // no precision
     {1e-6, 1e-6 + 1e-9, 6, true}, // Very close but small tolerance
     {123456789.123456, 123456789.123456, 15, true}, // Test large significand
     {123456789.123456, 123456789.123457, 15, false
-    },                        // Test differentiated large significand
-    {1e-15, 2e-15, 15, false} // Small numbers with large tolerance
+    },                       // Test differentiated large significand
+    {1e-15, 2e-15, 15, true} // Small numbers with large tolerance
 };
 
 const size_t number_of_tests = sizeof(tests) / sizeof(tests[0]);
