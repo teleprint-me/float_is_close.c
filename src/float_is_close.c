@@ -85,7 +85,6 @@ bool double_is_close(double a, double b, size_t significand) {
         return false;
     }
 
-    // Clamp the significand to the range 1 <= significand <= 15
     significand = FIC_CLAMP(significand, 1, 15);
 
     double absolute_tolerance = tolerance_table[significand];
@@ -112,17 +111,14 @@ bool double_is_close(double a, double b, size_t significand) {
  * @note FIC_EPSILON_SINGLE_TOLERANCE affects relative tolerance.
  */
 bool float_is_close(float a, float b, size_t significand) {
-    // Numbers are equal
     if (a == b) {
         return true;
     }
 
-    // Arguments are not numbers
     if (isinf(a) || isinf(b) || isnan(a) || isnan(b)) {
         return false;
     }
 
-    // Clamp the significand to the range 1 <= significand <= 7
     significand = FIC_CLAMP(significand, 1, 7);
 
     float absolute_tolerance = (float) tolerance_table[significand];
