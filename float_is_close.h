@@ -13,19 +13,51 @@
 #include <stdint.h>
 
 /**
- * @brief Determines if two floating-point values are approximately equal
- * within specified tolerances.
+ * @brief The smallest difference between two distinct double-precision
+ *        floating-point numbers (optional).
  *
- * @param[in]   a       The first floating-point value.
- * @param[in]   b       The second floating-point value.
- * @param[in]   tolerance Tolerance for comparing values (default:
- * FLOAT_TOLERANCE).
- *
- * @return true if the absolute difference between 'a' and 'b' is within the
- * tolerance bounds, false otherwise.
+ * @note For 64-bit doubles with a 53-bit significand, this is approximately
+ *       10**-15.
  */
-bool float_is_close(float a, float b, int32_t significand);
+#define DOUBLE_EPSILON 1e-15
 
-bool double_is_close(double a, double b, int64_t significand);
+/**
+ * @brief The smallest difference between two distinct single-precision
+ *        floating-point numbers (optional).
+ *
+ * @note For 32-bit floats with a 24-bit significand, this is approximately
+ *       10**-7.
+ */
+#define SINGLE_EPSILON 1e-7
+
+/**
+ * @brief Determine if two double-precision floating-point numbers are close
+ *        within a specified tolerance.
+ *
+ * @param a           The first floating-point number.
+ * @param b           The second floating-point number.
+ * @param significand The number of significant digits to consider (must be
+ *                    in the range 1 to 15 inclusive). This determines the
+ *                    absolute tolerance.
+ *
+ * @return            True if the numbers are close within the specified
+ *                    tolerance, false otherwise.
+ */
+bool double_is_close(double a, double b, size_t significand);
+
+/**
+ * @brief Determine if two single-precision floating-point numbers are close
+ *        within a specified tolerance.
+ *
+ * @param a           The first floating-point number.
+ * @param b           The second floating-point number.
+ * @param significand The number of significant digits to consider (must be
+ *                    in the range 1 to 15 inclusive). This determines the
+ *                    absolute tolerance.
+ *
+ * @return            True if the numbers are close within the specified
+ *                    tolerance, false otherwise.
+ */
+bool float_is_close(float a, float b, size_t significand);
 
 #endif // FLOAT_IS_CLOSE_H
