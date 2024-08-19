@@ -48,7 +48,7 @@ static const double const tolerance_table[16]
  *                    tolerance, false otherwise.
  *
  * @note The significand is clamped if it is out of range.
- * @note FIC_EPSILON_DOUBLE_TOLERANCE affects relative tolerance.
+ * @note FIC_DOUBLE_EPSILON affects relative tolerance.
  */
 bool double_is_close(double a, double b, size_t significand) {
     if (a == b) {
@@ -82,7 +82,7 @@ bool double_is_close(double a, double b, size_t significand) {
  *                    tolerance, false otherwise.
  *
  * @note The significand is clamped if it is out of range.
- * @note FIC_EPSILON_SINGLE_TOLERANCE affects relative tolerance.
+ * @note FIC_SINGLE_EPSILON affects relative tolerance.
  */
 bool float_is_close(float a, float b, size_t significand) {
     if (a == b) {

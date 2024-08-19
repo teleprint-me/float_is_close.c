@@ -77,6 +77,7 @@
  *                    tolerance, false otherwise.
  *
  * @note The significand is clamped if it is out of range.
+ * @note FIC_DOUBLE_EPSILON affects relative tolerance.
  */
 bool double_is_close(double a, double b, size_t significand);
 
@@ -87,11 +88,14 @@ bool double_is_close(double a, double b, size_t significand);
  * @param a           The first floating-point number.
  * @param b           The second floating-point number.
  * @param significand The number of significant digits to consider (must be
- *                    in the range 1 to 15 inclusive). This determines the
+ *                    in the range 1 to 7 inclusive). This determines the
  *                    absolute tolerance.
  *
  * @return            True if the numbers are close within the specified
  *                    tolerance, false otherwise.
+ *
+ * @note The significand is clamped if it is out of range.
+ * @note FIC_SINGLE_EPSILON affects relative tolerance.
  */
 bool float_is_close(float a, float b, size_t significand);
 
