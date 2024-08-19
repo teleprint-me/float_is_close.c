@@ -15,6 +15,28 @@
 #include <math.h>
 #include <stdlib.h>
 
+/**
+ * @brief Get the minimum of two values.
+ *
+ * @note This macro compares two arguments and returns the smaller one.
+ */
+#define FIC_MIN(a, b)             ((a) < (b) ? (a) : (b))
+
+/**
+ * @brief Get the maximum of two values.
+ *
+ * @note This macro compares two arguments and returns the larger one.
+ */
+#define FIC_MAX(a, b)             ((a) > (b) ? (a) : (b))
+
+/**
+ * @brief Clamp a value to a specified range.
+ *
+ * @note This macro ensures that a value stays within a given range by
+ *       clamping it to the specified minimum and maximum values.
+ */
+#define FIC_CLAMP(val, low, high) (FIC_MAX(low, FIC_MIN(val, high)))
+
 // Pre-computed lookup table
 static const double const tolerance_table[16]
     = {1.0,
@@ -59,7 +81,7 @@ bool double_is_close(double a, double b, size_t significand) {
     }
 
     // Clamp the significand to the range 1 <= significand <= 15
-    significand = clamp(significand, 1, 15);
+    significand = FIC_CLAMP(significand, 1, 15);
 
     double absolute_tolerance = tolerance_table[significand];
     double relative_tolerance = DOUBLE_EPSILON * fmax(fabs(a), fabs(b));
@@ -95,7 +117,7 @@ bool float_is_close(float a, float b, size_t significand) {
     }
 
     // Clamp the significand to the range 1 <= significand <= 7
-    significand = clamp(significand, 1, 7);
+    significand = FIC_CLAMP(significand, 1, 7);
 
     float absolute_tolerance = (float) tolerance_table[significand];
     float relative_tolerance
