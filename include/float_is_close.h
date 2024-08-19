@@ -4,6 +4,8 @@
  * @file float_is_close.h
  *
  * @brief Compare floating-point numbers with a given tolerance in pure C
+ *
+ * @note FIC is an abbreviation of FLOAT_IS_CLOSE
  */
 
 #ifndef FLOAT_IS_CLOSE_H
