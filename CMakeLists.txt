@@ -46,7 +46,7 @@ install(
 
 # Add a custom target to run tests
 add_custom_target(
-    run_tests
+    run_test_float_is_close
     COMMAND ${EXECUTABLE_OUTPUT_PATH}/test_float_is_close
     DEPENDS test_float_is_close
     COMMENT "Running tests for float_is_close"
